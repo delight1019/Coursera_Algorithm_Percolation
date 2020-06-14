@@ -18,6 +18,10 @@ public class PercolationStats {
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials) {
+        if ((n <= 0) || (trials <= 0)) {
+            throw new IllegalArgumentException();
+        }
+
         fractionArray = new double[trials];
 
         for (int t = 0; t < trials; t++) {

@@ -93,7 +93,8 @@ public class Percolation {
                 int nextRow = row - 1;
                 int nextCol = col;
 
-                if (isOpen(nextRow, nextCol)) {
+                if (isOpen(nextRow, nextCol) &&
+                        (weightedQuickUnionUF.find(getUFIndex(row, col)) != weightedQuickUnionUF.find(getUFIndex(nextRow, nextCol)))) {
                     weightedQuickUnionUF.union(getUFIndex(row, col), getUFIndex(nextRow, nextCol));
                 }
             }
@@ -102,7 +103,8 @@ public class Percolation {
                 int nextRow = row + 1;
                 int nextCol = col;
 
-                if (isOpen(nextRow, nextCol)) {
+                if (isOpen(nextRow, nextCol) &&
+                    (weightedQuickUnionUF.find(getUFIndex(row, col)) != weightedQuickUnionUF.find(getUFIndex(nextRow, nextCol)))) {
                     weightedQuickUnionUF.union(getUFIndex(row, col), getUFIndex(nextRow, nextCol));
                 }
             }
@@ -111,7 +113,8 @@ public class Percolation {
                 int nextRow = row;
                 int nextCol = col - 1;
 
-                if (isOpen(nextRow, nextCol)) {
+                if (isOpen(nextRow, nextCol) &&
+                    (weightedQuickUnionUF.find(getUFIndex(row, col)) != weightedQuickUnionUF.find(getUFIndex(nextRow, nextCol)))) {
                     weightedQuickUnionUF.union(getUFIndex(row, col), getUFIndex(nextRow, nextCol));
                 }
             }
@@ -120,7 +123,8 @@ public class Percolation {
                 int nextRow = row;
                 int nextCol = col + 1;
 
-                if (isOpen(nextRow, nextCol)) {
+                if (isOpen(nextRow, nextCol) &&
+                        (weightedQuickUnionUF.find(getUFIndex(row, col)) != weightedQuickUnionUF.find(getUFIndex(nextRow, nextCol)))) {
                     weightedQuickUnionUF.union(getUFIndex(row, col), getUFIndex(nextRow, nextCol));
                 }
             }
