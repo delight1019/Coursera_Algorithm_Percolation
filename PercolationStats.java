@@ -12,10 +12,9 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
-    /**
-     * Array to store fraction of opens sites
-     */
-    private double[] fractionArray;
+    private static final double CINFIDENCE_INTERVAL_CONST = 1.96;
+    // Array to store fraction of opens sites
+    private final double[] fractionArray;
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials) {
@@ -25,8 +24,8 @@ public class PercolationStats {
             Percolation percolation = new Percolation(n);
 
             while (!percolation.percolates()) {
-                int row = StdRandom.uniform(n);
-                int col = StdRandom.uniform(n);
+                int row = StdRandom.uniform(1, n + 1);
+                int col = StdRandom.uniform(1, n + 1);
 
                 percolation.open(row, col);
             }
@@ -47,12 +46,12 @@ public class PercolationStats {
 
     // low endpoint of 95% confidence interval
     public double confidenceLo() {
-        return mean() - 1.96 * stddev() / Math.sqrt(fractionArray.length);
+        return mean() - CINFIDENCE_INTERVAL_CONST * stddev() / Math.sqrt(fractionArray.length);
     }
 
     // high endpoint of 95% confidence interval
     public double confidenceHi() {
-        return mean() + 1.96 * stddev() / Math.sqrt(fractionArray.length);
+        return mean() + CINFIDENCE_INTERVAL_CONST * stddev() / Math.sqrt(fractionArray.length);
     }
 
     // test client (see below)
