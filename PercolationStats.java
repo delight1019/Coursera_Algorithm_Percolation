@@ -1,20 +1,20 @@
 /* *****************************************************************************
- *  Name:    Alan Turing
- *  NetID:   aturing
- *  Precept: P00
+ *  Name:    Hyehyeon Kim
+ *  NetID:   kippem9088
+ *  Precept: P01
  *
- *  Description:  Prints 'Hello, World' to the terminal window.
- *                By tradition, this is everyone's first program.
- *                Prof. Brian Kernighan initiated this tradition in 1974.
+ *  Description: Given N and T, creates N x N grids and
+ *               does T times trial of percolation.
  *
  **************************************************************************** */
 
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
-import static java.lang.Math.sqrt;
-
 public class PercolationStats {
+    /**
+     * Array to store fraction of opens sites
+     */
     private double[] fractionArray;
 
     // perform independent trials on an n-by-n grid
@@ -47,23 +47,28 @@ public class PercolationStats {
 
     // low endpoint of 95% confidence interval
     public double confidenceLo() {
-        return mean() - 1.96 * stddev() / sqrt(fractionArray.length);
+        return mean() - 1.96 * stddev() / Math.sqrt(fractionArray.length);
     }
 
     // high endpoint of 95% confidence interval
     public double confidenceHi() {
-        return mean() + 1.96 * stddev() / sqrt(fractionArray.length);
+        return mean() + 1.96 * stddev() / Math.sqrt(fractionArray.length);
     }
 
     // test client (see below)
     public static void main(String[] args) {
         int n = Integer.parseInt(args[0]);
-        int T = Integer.parseInt(args[1]);
+        int t = Integer.parseInt(args[1]);
 
-        PercolationStats percolationStats = new PercolationStats(n, T);
+        PercolationStats percolationStats = new PercolationStats(n, t);
 
-        System.out.print(String.format("%-23s = %.16f\n", "mean", percolationStats.mean()));
-        System.out.print(String.format("%-23s = %.16f\n", "stddev", percolationStats.stddev()));
-        System.out.print(String.format("%-23s = [%.16f, %.16f]\n", "95% confidence interval", percolationStats.confidenceLo(), percolationStats.confidenceHi()));
+        System.out.print(String.format("%-23s = %.16f\n",
+                                       "mean", percolationStats.mean()));
+        System.out.print(String.format("%-23s = %.16f\n",
+                                       "stddev", percolationStats.stddev()));
+        System.out.print(String.format("%-23s = [%.16f, %.16f]\n",
+                                       "95% confidence interval",
+                                       percolationStats.confidenceLo(),
+                                       percolationStats.confidenceHi()));
     }
 }

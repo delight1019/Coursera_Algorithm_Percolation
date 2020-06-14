@@ -1,11 +1,9 @@
 /* *****************************************************************************
- *  Name:    Alan Turing
- *  NetID:   aturing
- *  Precept: P00
+ *  Name:    Hyehyeon Kim
+ *  NetID:   kippem9088
+ *  Precept: P01
  *
- *  Description:  Prints 'Hello, World' to the terminal window.
- *                By tradition, this is everyone's first program.
- *                Prof. Brian Kernighan initiated this tradition in 1974.
+ *  Description:  Generates N x N grid and check that it percolates.
  *
  **************************************************************************** */
 
@@ -15,44 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Percolation {
-    private final int BLOCKED = 0;
-    private final int OPENED = 1;
+    private static final int BLOCKED = 0;
+    private static final int OPENED = 1;
 
+    // Array to get directions of (0, 1), (1, 0), (0, -1), (-1, 0)
     private final int[] fourDirectionsX = {0, 1, 0, -1};
+    // Array to get directions of (0, 1), (1, 0), (0, -1), (-1, 0)
     private final int[] fourDirectionsY = {1, 0, -1, 0};
-
-    private int[][] board;
-    private int[] lowerLine;
-    private WeightedQuickUnionUF uf;
-
-    private int getN() {
-        return board.length;
-    }
-
-    private int getUFIndex(int row, int col) {
-        return row * board.length + col + 1;
-    }
-
-    private boolean isUpperRow(int row) {
-        return (row == 0);
-    }
-
-    private boolean isLowerRow(int row) {
-        return (row == getN() - 1);
-    }
-
-    private boolean isLeftCol(int col) {
-        return (col == 0);
-    }
-
-    private boolean isRightCol(int col) {
-        return (col == getN() - 1);
-    }
-
-    private boolean checkCornerCases(int row, int col) {
-        return ((row < 0) || (row >= getN()) ||
-                (col < 0) || (col >= getN()));
-    }
+    private int[][] board; // Game Board
+    private int[] lowerLine; // represents lowest line of the board
+    private WeightedQuickUnionUF uf; // Union Find
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
@@ -67,6 +37,42 @@ public class Percolation {
                 board[i][j] = BLOCKED;
             }
         }
+    }
+
+    // returns length of the board
+    private int getN() {
+        return board.length;
+    }
+
+    // converts row, col to index of the Union Find
+    private int getUFIndex(int row, int col) {
+        return row * board.length + col + 1;
+    }
+
+    // returns whether the given row is the uppermost row
+    private boolean isUpperRow(int row) {
+        return (row == 0);
+    }
+
+    // returns whether the given row is the lowest row
+    private boolean isLowerRow(int row) {
+        return (row == getN() - 1);
+    }
+
+    // returns wheter the given col is the leftmost col
+    private boolean isLeftCol(int col) {
+        return (col == 0);
+    }
+
+    // returns whether the given col is the rightmost col
+    private boolean isRightCol(int col) {
+        return (col == getN() - 1);
+    }
+
+    // returns wheter the given row, col is on the corner site
+    private boolean checkCornerCases(int row, int col) {
+        return ((row < 0) || (row >= getN()) ||
+                (col < 0) || (col >= getN()));
     }
 
     // opens the site (row, col) if it is not open already
